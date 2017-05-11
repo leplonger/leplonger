@@ -142,8 +142,8 @@ module.exports = {
         .then( (result) => {
           let toFormat = result.data.split('\n').slice(0, 14);
           let waveHeights = visUtils.formatData(result.data, 'WVHT');
-
           res.send(waveHeights);
+
         })
         .catch( (err) => {
           console.log('Error getting bouy data: ', err);
