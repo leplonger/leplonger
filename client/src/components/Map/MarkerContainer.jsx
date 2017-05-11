@@ -50,7 +50,7 @@ class MarkerContainer extends React.Component {
          </InfoWindow>
        </div>
      )
-   
+
    } else {
      return (
        <div>
