@@ -2,10 +2,11 @@ import React from 'react';
 import Comment from './Comment.jsx'
 
 const CommentContainer = (props) => {
-
+  console.log('this is a test' ,props.comments.length)
  return (
  	<div>
- 	  <h2>Dive Site Reviews</h2>
+ 	{props.comments.length > 0 ? <h2>Dive Site Reviews</h2> : <h4>Select a Dive Location and Click 'See Condions' to Read a Reveiw</h4>}
+
  	 {props.comments.map((item, idx) => {
  	 	return <Comment key={idx} comments={item} />
  	 })}
