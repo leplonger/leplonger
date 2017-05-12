@@ -49,6 +49,10 @@ class App extends React.Component {
     this.toggleInfoWindow = this.toggleInfoWindow.bind(this);
     this.getDiveSiteInfo = this.getDiveSiteInfo.bind(this);
 
+
+    this.getDiveSiteInfo = this.getDiveSiteInfo.bind(this); 
+    this.LogOut = this.LogOut.bind(this);
+
   }
 
 
@@ -185,6 +189,7 @@ class App extends React.Component {
         "longitude": `${longitude}`,
         "latitude": `${latitude}`,
         "rating": `${rating}`,
+
         "description": `${description}`
       }
 
@@ -247,6 +252,7 @@ class App extends React.Component {
     return (
       <div className='container-fluid'>
         <div className='row'>
+
 
 
         <div>

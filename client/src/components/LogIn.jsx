@@ -2,7 +2,6 @@ import React from 'react';
 import $ from 'jquery';
 import Input from 'react-input-password';
 
-
 class Login extends React.Component {
   constructor(props) {
     super(props);
