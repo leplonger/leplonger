@@ -52,6 +52,7 @@ class App extends React.Component {
     this.getDiveSiteInfo = this.getDiveSiteInfo.bind(this);
 
 
+
   }
 
 
@@ -219,7 +220,6 @@ class App extends React.Component {
     return (
       <div className='container-fluid'>
         <div className='row'>
-
 
 
         <div>
