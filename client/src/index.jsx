@@ -252,7 +252,6 @@ class App extends React.Component {
         <div className='row'>
 
 
-
         <div>
           <TopBar 
           newDiveSite={this.addNewDiveSite.bind(this)}
