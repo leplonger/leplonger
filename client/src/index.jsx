@@ -5,9 +5,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 
-import { CookiesProvider, withCookies, Cookies } from 'react-cookie';
-
-
 import $ from 'jquery';
 import _ from 'underscore';
 /*--Landing Page Weather/Wave Components--*/
@@ -32,13 +29,10 @@ class App extends React.Component {
       user: null,
       diveview: false,
       openInfoWindow: false,
-
       modalIsOpen: false,
       modalLogin: false,
       modalSignup: false,
-
       weatherdata: seedWeatherData,
-
       siteDescription: '',
       commentdata: [],
       homeWeather: [seedWeatherData, seedWeatherData, seedWeatherData],
@@ -50,8 +44,15 @@ class App extends React.Component {
 
     this.showConditions = this.showConditions.bind(this);
     this.toggleInfoWindow = this.toggleInfoWindow.bind(this);
+
     this.getDiveSiteInfo = this.getDiveSiteInfo.bind(this);
+
+
+    this.getDiveSiteInfo = this.getDiveSiteInfo.bind(this); 
+    this.LogOut = this.LogOut.bind(this);
+
   }
+
 
 
   logIn (user, pass) {
@@ -70,6 +71,13 @@ class App extends React.Component {
       .catch( (err) => {
         console.log('Error adding user: ', err);
       })
+  }
+
+  LogOut () {
+    console.log(this.state.user);
+    this.setState({
+      user: null
+    })
   }
 
   new_users (username, password, repeatedPassword, skill, age, email) {
@@ -243,14 +251,12 @@ class App extends React.Component {
     })
   }
 
-
-
-
   render() {
 
     return (
       <div className='container-fluid'>
         <div className='row'>
+
 
 
         <div>
@@ -259,6 +265,7 @@ class App extends React.Component {
           new_users={this.new_users.bind(this)} 
           logIn={this.logIn.bind(this)}
           user={this.state.user}
+          logout={this.LogOut.bind(this)}
           />
         </div>
 
