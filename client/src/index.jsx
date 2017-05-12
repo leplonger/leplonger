@@ -51,7 +51,9 @@ class App extends React.Component {
     this.showConditions = this.showConditions.bind(this);
     this.toggleInfoWindow = this.toggleInfoWindow.bind(this);
     this.getDiveSiteInfo = this.getDiveSiteInfo.bind(this);
+
   }
+
 
 
   logIn (user, pass) {
@@ -186,6 +188,7 @@ class App extends React.Component {
         "longitude": `${longitude}`,
         "latitude": `${latitude}`,
         "rating": `${rating}`,
+
         "description": `${description}`
       }
 
@@ -243,14 +246,12 @@ class App extends React.Component {
     })
   }
 
-
-
-
   render() {
 
     return (
       <div className='container-fluid'>
         <div className='row'>
+
 
 
         <div>
