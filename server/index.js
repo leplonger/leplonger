@@ -4,10 +4,6 @@ const path = require('path');
 const cors = require('cors');
 const rout = require('./routes');
 
-<<<<<<< HEAD
-
-=======
->>>>>>> Working on cookies, installed dependencies but have not achieved full functionality
 const app = express();
 const port = process.env.PORT || 8080;
 const SampleData = require('./db/sampledata/weather.js');
