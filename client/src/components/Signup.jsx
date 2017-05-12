@@ -132,6 +132,7 @@ class Signup extends React.Component {
 		    this.state.skill,
 		    this.state.age,
 		    this.state.email)}
+		  
 		    >
 		    Sign In </button>
 		  </div>
