@@ -4,8 +4,6 @@ import Input from 'react-input-password';
 import { CookiesProvider } from 'react-cookie';
 
 
-
-
 class Login extends React.Component {
   constructor(props) {
     super(props);

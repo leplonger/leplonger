@@ -51,16 +51,9 @@ class App extends React.Component {
     this.toggleInfoWindow = this.toggleInfoWindow.bind(this);
     this.getDiveSiteInfo = this.getDiveSiteInfo.bind(this);
 
-    this.openModal = this.openModal.bind(this);
-    this.afterOpenModal = this.afterOpenModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
-    this.openLoginModal = this.openLoginModal.bind(this);
-    this.afterOpenLoginModal = this.afterOpenLoginModal.bind(this);
-    this.closeLoginModal = this.closeLoginModal.bind(this);
-    this.openSignupModal = this.openSignupModal.bind(this);
-    this.afterOpenSignupModal = this.afterOpenSignupModal.bind(this);
-    this.closeSignupModal = this.closeSignupModal.bind(this);
+
   }
+
 
 
   logIn (user, pass) {
@@ -194,6 +187,7 @@ class App extends React.Component {
         "longitude": `${longitude}`,
         "latitude": `${latitude}`,
         "rating": `${rating}`,
+
         "description": `${description}`
       }
 
@@ -221,14 +215,12 @@ class App extends React.Component {
     })
   }
 
-
-
-
   render() {
 
     return (
       <div className='container-fluid'>
         <div className='row'>
+
 
 
         <div>
