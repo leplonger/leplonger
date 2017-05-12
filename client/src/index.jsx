@@ -5,9 +5,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Modal from 'react-modal';
 
-import { CookiesProvider, withCookies, Cookies } from 'react-cookie';
-
-
 import $ from 'jquery';
 import _ from 'underscore';
 /*--Landing Page Weather/Wave Components--*/
@@ -188,6 +185,7 @@ class App extends React.Component {
         "longitude": `${longitude}`,
         "latitude": `${latitude}`,
         "rating": `${rating}`,
+
         "description": `${description}`
       }
 
@@ -250,6 +248,7 @@ class App extends React.Component {
     return (
       <div className='container-fluid'>
         <div className='row'>
+
 
 
         <div>
