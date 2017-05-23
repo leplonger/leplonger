@@ -1,5 +1,5 @@
 import React from 'react';
-import keys from '../../../../keys.js';
+import keys from '../../../../config/index.js';
 import {withGoogleMap, GoogleMap, Marker, InfoWindow} from 'react-google-maps';
 import MarkerContainer from './MarkerContainer.jsx';
 // import styles from './mapStyles.json';
