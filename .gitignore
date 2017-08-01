@@ -35,5 +35,6 @@ bower_components/
 
 # API Keys
 keys.js
+config/config.prod.js
 
 commentidea.js

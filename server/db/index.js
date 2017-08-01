@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 const Promise = require('bluebird');
-const keys = require('../../keys.js');
+const keys = require('../../config/index.js');
 // Create a database connection and export it from this file.
 // You will need to connect with the user "root", no password,
 // and to the database "chat".
