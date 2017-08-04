@@ -1,42 +1,39 @@
 const connection = require('../db');
-const request = require('request');
 const Api = require('../../config/index.js');
-const Promise = require('bluebird');
 const axios = require('axios');
-const sha1 = require('sha1');
 const visUtils = require('../../visualization/visUtils.js');
 
 module.exports = {
   users: {
     get: (user, callback) => {
-      let userInfo = [user.user, user.pass];
-      let queryString = `SELECT salt, password, id, skill, name FROM users WHERE name = '${userInfo[0]}';`;
+      const userInfo = [user.user, user.pass];
+      const queryString = `SELECT salt, password, id, skill, name FROM users WHERE name = '${userInfo[0]}';`;
 
       connection.query(queryString, (err, data) => {
-        if(err) {
+        if (err) {
           console.log('err');
           callback(err, null);
         } else {
-          console.log("Schema query,", data);
+          console.log('Schema query: ', data);
           callback(null, data);
         }
-      })
+      });
     },
 
-    post: (new_user, callback) => {
-       let user = [new_user.name, new_user.password, new_user.email, new_user.salt, new_user.age, new_user.skill];
-       let queryString = `INSERT INTO users( name, password, email, salt, age, skill ) VALUES (?, ?, ?, ?, ?, ?);`;
+    post: (newUser, callback) => {
+      const user = [newUser.name, newUser.password, newUser.email, newUser.salt, newUser.age, newUser.skill];
+      const queryString = 'INSERT INTO users( name, password, email, salt, age, skill ) VALUES (?, ?, ?, ?, ?, ?);';
 
-       connection.query(queryString, user, (err, data) => {
-         if (err) {
-           console.log('Error: ', err);
-           callback(err, null);
-         } else {
-           console.log('posted users to database');
-           callback(null, data);
-         }
-       })
-    }
+      connection.query(queryString, user, (err, data) => {
+        if (err) {
+          console.log('Error: ', err);
+          callback(err, null);
+        } else {
+          console.log('posted users to database');
+          callback(null, data);
+        }
+      });
+    },
   },
 
   dive_sites: {
@@ -52,10 +49,10 @@ module.exports = {
     },
 
     post: (new_sites, callback) => {
-      let diveSite = [ new_sites.name, new_sites.longitude, new_sites.latitude, new_sites.rating, new_sites.description, new_sites.user_dive];
-      let queryString = 'INSERT INTO dives( name, longitude, latitude, rating, description, user_dive ) VALUES ( ?, ?, ?, ?, ?, ?)';
-      
-      connection.query(queryString, diveSite, function(err, data) {
+      const diveSite = [new_sites.name, new_sites.longitude, new_sites.latitude, new_sites.rating, new_sites.description, new_sites.user_dive];
+      const queryString = 'INSERT INTO dives( name, longitude, latitude, rating, description, user_dive ) VALUES ( ?, ?, ?, ?, ?, ?)';
+
+      connection.query(queryString, diveSite, (err, data) => {
         if (err) {
           console.log('could not post dive-sites to database');
           callback(err, null);
@@ -63,15 +60,15 @@ module.exports = {
           console.log('posted dive-sites to database');
           callback(null, data);
         }
-      })
-    }
+      });
+    },
   },
 
   comments: {
     get: (req, res) => {
       console.log('trying to get comments for: ', req.body);
-      let diveID = req.body.diveSite_id;
-      let queryString = 'SELECT * FROM comments INNER JOIN dives ON dives.id=comments.divesite_id LEFT JOIN users ut on comments.user_id = ut.id WHERE comments.divesite_id=' + diveID;
+      const diveID = req.body.diveSite_id;
+      const queryString = 'SELECT * FROM comments INNER JOIN dives ON dives.id=comments.divesite_id LEFT JOIN users ut on comments.user_id = ut.id WHERE comments.divesite_id=' + diveID;
 
       return connection.queryAsync(
         queryString
@@ -79,34 +76,34 @@ module.exports = {
     },
 
     post: (new_comment, callback) => {
-      let newComment = [new_comment.divesite_id, new_comment.message, new_comment.user_id, new_comment.date_1];
-      let queryString = 'INSERT INTO comments(divesite_id, message, user_id, date_1 ) VALUES(?,?,?,?)';
-      connection.query(queryString, newComment ,function(err, data){
-        if (err){
+      const newComment = [new_comment.divesite_id, new_comment.message, new_comment.user_id, new_comment.date_1];
+      const queryString = 'INSERT INTO comments(divesite_id, message, user_id, date_1 ) VALUES(?,?,?,?)';
+      connection.query(queryString, newComment, (err, data) => {
+        if (err) {
           console.log('could not post comment to database');
           callback(err, null);
-        } else{
+        } else {
           console.log('posted new comment data to database');
-          callback(null,data)
+          callback(null, data);
         }
-      })
-    }
+      });
+    },
   },
 
   weather: {
- //uncomment url for actual use, disabled so we don't hit api limit
+    // uncomment url for actual use, disabled so we don't hit api limit
     get: (req, res) => {
       const location = `${req.body.location.lat},${req.body.location.lng}`;
       const url = `http://api.wunderground.com/api/${Api.weatherUnderground}/geolookup/conditions/q/${location}.json`;
 
       axios.get(url)
-        .then( (result) => {
+        .then((result) => {
           console.log('received data from weatherUnderground');
           res.json(result.data);
         })
-        .catch( (err) => {
+        .catch((err) => {
           console.log('error from weather api: ', err.message);
-        })
+        });
     },
 
     home: (req, res) => {
@@ -116,45 +113,43 @@ module.exports = {
       const southCalCoordinates = '37.8267,-122.4233';
 
       axios.get(`https://api.darksky.net/forecast/${Api.darkSky}/${norCalCoordinates}`)
-        .then( (result) => {
-          homeWeather.push(result.data)
+        .then((result) => {
+          homeWeather.push(result.data);
           axios.get(`https://api.darksky.net/forecast/${Api.darkSky}/${centralCalCoordinates}`)
-            .then( (result) => {
-              homeWeather.push(result.data);
+            .then((res) => {
+              homeWeather.push(res.data);
               axios.get(`https://api.darksky.net/forecast/${Api.darkSky}/${southCalCoordinates}`)
-                .then( (result) => {
-                  homeWeather.push(result.data);
-                  res.json(homeWeather);
-                })
-            })
+                .then((resLOLSERIOUSLYWHATISTHISCODEMAN) => {
+                  homeWeather.push(resLOLSERIOUSLYWHATISTHISCODEMAN.data);
+                  resLOLSERIOUSLYWHATISTHISCODEMAN.json(homeWeather);
+                });
+            });
         })
-        .catch( (err) => {
+        .catch((err) => {
           console.log('Error retrieving home page weather: ', err.message);
-      })
-
-     }
+        });
+    },
   },
 
   ocean: {
     get: (req, res) => {
-      /*field options for formatData:  [ '#YY','MM','DD','hh','mm','WDIR','WSPD','GST','WVHT',
-          'DPD','APD','MWD','PRES','ATMP','WTMP','DEWP','VIS','PTDY','TIDE' ]*/
-      let latitude = +req.body.location.lat;
-      let longitude = +req.body.location.lng * -1;
-      let bouyId = visUtils.getBouy(latitude, longitude);
-      console.log('Closest bouy: ', bouyId);
+      /*  field options for formatData:  [ '#YY','MM','DD','hh','mm','WDIR','WSPD','GST','WVHT',
+      'DPD','APD','MWD','PRES','ATMP','WTMP','DEWP','VIS','PTDY','TIDE' ] */
+      const latitude = +req.body.location.lat;
+      const longitude = +req.body.location.lng * -1;
+      const bouyId = visUtils.getBouy(latitude, longitude);
 
       axios.get(`http://www.ndbc.noaa.gov/data/realtime2/${bouyId}.txt`)
-        .then( (result) => {
-          let toFormat = result.data.split('\n').slice(0, 14);
-          let waveHeights = visUtils.formatData(result.data, 'WVHT');
-
-          res.send({heights: waveHeights, id: bouyId});
+        .then((result) => {
+          // const toFormat = result.data.split('\n').slice(0, 14);
+          // COMMENTED OUT because what the hell is it even doing
+          const waveHeights = visUtils.formatData(result.data, 'WVHT');
+          res.send({ heights: waveHeights, id: bouyId });
         })
-        .catch( (err) => {
+        .catch((err) => {
           console.log('Error getting bouy data: ', err);
-        })
-    }
-  }
+        });
+    },
+  },
 };
 

@@ -56,7 +56,7 @@ describe('server', function() {
         "longitude": -123.89929,
         "latitude": 33.35414,
         "rating": 'Novice',
-        "description": "None"} 
+        "description": "None"}
       };
 
     request(requestParams, function(error, response, body) {
@@ -95,7 +95,7 @@ describe('server', function() {
 
   it('Should display our supreme competenece.', function(done) {
     request('http://127.0.0.1:8080/comments', function(error, response, body) {
-  
+
       expect(JSON.parse(body).results.length > 1).to.equal(true);
       done();
     });
@@ -144,7 +144,7 @@ describe('server', function() {
 
   it('Should display our supreme competenece.', function(done) {
     request('http://127.0.0.1:8080/comments', function(error, response, body) {
-  
+
       expect(JSON.parse(body).results.length > 1).to.equal(true);
       done();
     });
@@ -157,7 +157,7 @@ describe('server', function() {
 
 
   //   request(requestParams, function(error, response, body) {
-      
+
   //     // Now if we request the log, that message we posted should be there:
   //     request('http://127.0.0.1:3000/classes/messages', function(error, response, body) {
   //       var messages = JSON.parse(body).results;
@@ -178,7 +178,7 @@ describe('server', function() {
 
   it('Should display our supreme competenece.', function(done) {
     request('http://127.0.0.1:8080/comments', function(error, response, body) {
-  
+
       expect(JSON.parse(body).results.length > 1).to.equal(true);
       done();
     });
@@ -223,7 +223,7 @@ describe('server', function() {
   //   };
 
   //   request(requestParams, function(error, response, body) {
-      
+
   //     // Now if we request the log, that message we posted should be there:
   //     request('http://127.0.0.1:3000/classes/messages', function(error, response, body) {
   //       var messages = JSON.parse(body).results;
@@ -243,7 +243,7 @@ describe('server', function() {
 
   // it('Should display our supreme competenece.', function(done) {
   //   request('http://127.0.0.1:3000/classes/messages', function(error, response, body) {
-  
+
   //     expect(JSON.parse(body).results.length > 1).to.equal(true);
   //     done();
   //   });
@@ -278,7 +278,4 @@ describe('server', function() {
   // });
 
 
-
-=======
->>>>>>> cee61d8648a0ba7f7cc3de6df450ffa9f6aaf905
 });
