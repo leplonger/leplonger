@@ -152,13 +152,13 @@ TopBar.propTypes = {
   newDiveSite: React.PropTypes.func,
   logout: React.PropTypes.func,
   user: React.PropTypes.string,
-  dive_sites: React.PropTypes.array, // eslint-disable-line react/forbid-prop-types
+  dive_sites: React.PropTypes.bool, // eslint-disable-line react/forbid-prop-types
 };
 
 TopBar.defaultProps = {
   newDiveSite: () => {},
   logout: () => {},
-  dive_sites: [],
+  dive_sites: false,
   user: '',
 };
 

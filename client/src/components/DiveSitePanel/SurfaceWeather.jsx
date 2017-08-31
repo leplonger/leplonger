@@ -8,7 +8,7 @@ const SurfaceWeather = props => (
     <table className="table">
       <tbody>
         <tr>
-          <td>Gusts <span classNa me="data">{
+          <td>Gusts <span className="data">{
             props.weatherdata.current_observation.wind_gust_mph}
           </span>
           </td>

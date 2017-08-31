@@ -26,9 +26,9 @@ const CommentContainer = props => (
 CommentContainer.propTypes = {
   comments: React.PropTypes.array, // eslint-disable-line react/forbid-prop-types
   currentsite: React.PropTypes.object, // eslint-disable-line react/forbid-prop-types
-  userPresent: React.PropTypes.boolean,
-  user: React.propTypes.string,
-  addNewComment: React.propTypes.func,
+  userPresent: React.PropTypes.bool,
+  user: React.PropTypes.string,
+  addNewComment: React.PropTypes.func,
 };
 
 CommentContainer.defaultProps = {
