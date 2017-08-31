@@ -106,17 +106,19 @@ class App extends React.Component {
       });
 
     axios.post('/ocean', { location: site.position })
-      .then((result) => {
+      .then(({ data }) => {
+        console.log('data');
+        console.log(data);
         let max = 0;
-        result.data.heights.forEach((value) => {
+        data.heights.datasets[0].data.forEach((value) => {
           if (value.y > max) {
             max = value.y;
           }
         });
 
         this.setState({
-          waveHeight: [result.data.heights],
-          bouyId: result.data.id,
+          waveHeight: data.heights,
+          bouyId: data.id,
           graphHeight: max,
         });
       })

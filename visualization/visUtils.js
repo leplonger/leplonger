@@ -24,7 +24,14 @@ const getClosestBouy = (lat, lng) => {
 // they want to show the user, for now we're specifying waveheight(WVHT)
 // see comment in models/index.js ocean method for possible fields
 const formatBouyData = (data, field) => {
-  let formatted = [];
+  // let formatted = [];
+  let formatted = {
+    labels: [],
+    datasets: [{
+      label: 'test label',
+      data: [],
+    }],
+  };
 
   const rows = data.split('\n').slice(0, 14).map((row) => {
     return row.split(' ').filter(element => element !== '');
@@ -33,10 +40,14 @@ const formatBouyData = (data, field) => {
   const colIndex = rows[0].indexOf(field);
 
   for (let i = rows.length - 1; i > 1; i -= 1) {
-    const position = { x: (rows.length - (i)), y: +rows[i][colIndex] || 0 };
-    formatted.push(position);
-  }
+    // const position = { x: (rows.length - (i)), y: +rows[i][colIndex] || 0 };
+    // formatted.push(position);
 
+    formatted.labels.push(rows.length - i);
+    formatted.datasets[0].data.push(+rows[i][colIndex] || 0);
+  }
+  console.log('\n');
+  console.log(formatted);
   return formatted;
 };
 
