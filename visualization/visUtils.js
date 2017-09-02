@@ -28,8 +28,15 @@ const formatBouyData = (data, field) => {
   let formatted = {
     labels: [],
     datasets: [{
-      label: 'test label',
       data: [],
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)',
+      ],
     }],
   };
 
@@ -38,12 +45,12 @@ const formatBouyData = (data, field) => {
   });
 
   const colIndex = rows[0].indexOf(field);
+  const currentHour = new Date().getHours();
 
   for (let i = rows.length - 1; i > 1; i -= 1) {
-    // const position = { x: (rows.length - (i)), y: +rows[i][colIndex] || 0 };
-    // formatted.push(position);
-
-    formatted.labels.push(rows.length - i);
+    const hour = (currentHour + (rows.length - i)) % 24 || 12;
+    formatted.labels.push(hour < 12 ? hour : hour % 12 || 12);
+    // formatted.labels.push(hour < 12 ? `${hour}:00` : `${hour % 12 || 12}:00`);
     formatted.datasets[0].data.push(+rows[i][colIndex] || 0);
   }
   console.log('\n');

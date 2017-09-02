@@ -1,5 +1,4 @@
 import React from 'react';
-import { AreaChart } from 'react-easy-chart';
 import { Bar as Test } from 'react-chartjs-2';
 
 class OceanWeather extends React.Component {
@@ -28,6 +27,13 @@ class OceanWeather extends React.Component {
       <div className="wave-chart col-md-12 weather-section panel-text">
         <Test
           data={this.props.data}
+          options={{
+            title: {
+              display: true,
+              text: 'Wave Height Last 12 Hours',
+              fontColor: '#000',
+            },
+          }}
         />
         <p>Data for this dive site provided by NDBC Bouy: #{this.props.bouy}</p>
       </div>

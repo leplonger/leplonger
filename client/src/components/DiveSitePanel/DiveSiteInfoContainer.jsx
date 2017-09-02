@@ -5,9 +5,6 @@ import SiteDescription from './SiteDescription.jsx';
 
 const DiveSiteInfoContainer = props => (
   <div className="col-md-3 left-col">
-    <div>
-      <h2 className="leplonger">Wave Height(m): 12 Hr History</h2>
-    </div>
     <OceanWeather
       bouy={props.bouy}
       graphHeight={props.graphHeight + 1}
