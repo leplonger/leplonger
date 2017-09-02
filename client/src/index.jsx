@@ -32,9 +32,9 @@ class App extends React.Component {
       siteDescription: '',
       commentdata: [],
       homeWeather: null,
-      waveHeight: [],
+      waveHeight: {},
       graphHeight: 1,
-      bouyId: '.....',
+      bouyId: '...loading...',
 
       darksky: sampleDarkSky,
     };
@@ -46,6 +46,7 @@ class App extends React.Component {
     this.addNewDiveSite = this.addNewDiveSite.bind(this);
     this.new_users = this.new_users.bind(this);
     this.logIn = this.logIn.bind(this);
+    this.addNewDiveSiteComment = this.addNewDiveSiteComment.bind(this);
   }
 
   componentDidMount() {
@@ -196,19 +197,20 @@ class App extends React.Component {
      });
   }
 
-  addNewDiveSiteComment(divesite_id, message, user_id) {
+  addNewDiveSiteComment(divesiteId, message, userId) {
     let date = new Date();
-    date = date.getUTCFullYear() + '-' +
-      ('00' + (date.getUTCMonth() + 1)).slice(-2) + '-' +
-      ('00' + date.getUTCDate()).slice(-2) + ' ' +
-      ('00' + date.getUTCHours()).slice(-2) + ':' +
-      ('00' + date.getUTCMinutes()).slice(-2) + ':' +
-      ('00' + date.getUTCSeconds()).slice(-2);
+
+    date = `${date.getUTCFullYear()}-00
+            ${(date.getUTCMonth() + 1).slice(-2)}-00
+            ${date.getUTCDate().slice(-2)} 00
+            ${date.getUTCHours().slice(-2)}:00
+            ${date.getUTCMinutes().slice(-2)}:00
+            ${date.getUTCSeconds().slice(-2)}`;
 
     const data = {
-      divesite_id,
+      divesiteId,
       message,
-      user_id,
+      userId,
       date_1: date,
       name: this.state.user.name,
       skill: this.state.user.skill,
@@ -216,7 +218,6 @@ class App extends React.Component {
 
     axios.post('/newcomment', data)
       .then((response) => {
-        console.log('new comment added: ', response.data);
         this.setState({
           commentdata: this.state.commentdata.concat(response.data),
         });
@@ -226,17 +227,9 @@ class App extends React.Component {
       });
   }
 
-  showConditions(bool) {
-    this.setState({
-      diveview: bool,
-    });
-  }
+  showConditions(bool) { this.setState({ diveview: bool }); }
 
-  toggleInfoWindow() {
-    this.setState({
-      openInfoWindow: !this.state.openInfoWindow,
-    });
-  }
+  toggleInfoWindow() { this.setState({ openInfoWindow: !this.state.openInfoWindow }); }
 
 
   render() {
@@ -283,7 +276,6 @@ class App extends React.Component {
             {this.state.diveview ?
               <CommentContainer
                 user={this.state.user}
-                userPresent={this.state.user}
                 currentsite={this.state.currentsite}
                 comments={this.state.commentdata}
                 addNewComment={this.addNewDiveSiteComment}

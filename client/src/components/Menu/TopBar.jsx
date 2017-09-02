@@ -151,15 +151,15 @@ class TopBar extends React.Component {
 TopBar.propTypes = {
   newDiveSite: React.PropTypes.func,
   logout: React.PropTypes.func,
-  user: React.PropTypes.string,
-  dive_sites: React.PropTypes.bool, // eslint-disable-line react/forbid-prop-types
+  user: React.PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  dive_sites: React.PropTypes.bool,
 };
 
 TopBar.defaultProps = {
   newDiveSite: () => {},
   logout: () => {},
   dive_sites: false,
-  user: '',
+  user: {},
 };
 
 export default TopBar;

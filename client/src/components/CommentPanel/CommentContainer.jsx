@@ -11,12 +11,12 @@ const CommentContainer = props => (
           Sorry, there are no reviews for {props.currentsite.name} yet.
         </h2>}
 
-    {props.comments.map((item, index) =>
-      <Comment key={index} comments={item} />,
+    {props.comments.map(item =>
+      <Comment key={String(Math.random())} comments={item} />,
     )}
 
-    {(props.userPresent)
-    ? <CommentForm user={props.user} site={props.currentsite} addNewComment={props.addNewComment}/>
+    {(props.user)
+    ? <CommentForm user={props.user} site={props.currentsite} addNewComment={props.addNewComment} />
     : null
   }
   </div>
@@ -26,8 +26,7 @@ const CommentContainer = props => (
 CommentContainer.propTypes = {
   comments: React.PropTypes.array, // eslint-disable-line react/forbid-prop-types
   currentsite: React.PropTypes.object, // eslint-disable-line react/forbid-prop-types
-  userPresent: React.PropTypes.bool,
-  user: React.PropTypes.string,
+  user: React.PropTypes.object, // eslint-disable-line react/forbid-prop-types
   addNewComment: React.PropTypes.func,
 };
 
@@ -35,7 +34,7 @@ CommentContainer.defaultProps = {
   comments: [],
   currentsite: {},
   userPresent: false,
-  user: '',
+  user: null,
   addNewComment: () => {},
 };
 

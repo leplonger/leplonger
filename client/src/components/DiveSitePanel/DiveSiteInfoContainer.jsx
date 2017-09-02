@@ -7,7 +7,6 @@ const DiveSiteInfoContainer = props => (
   <div className="col-md-3 left-col">
     <OceanWeather
       bouy={props.bouy}
-      graphHeight={props.graphHeight + 1}
       data={props.data}
     />
     <SurfaceWeather weatherdata={props.weatherdata} />
@@ -15,18 +14,18 @@ const DiveSiteInfoContainer = props => (
   </div>
 );
 
-OceanWeather.propTypes = {
-  graphHeight: React.PropTypes.number, // eslint-disable-line react/forbid-prop-types
-  // bouy: React.PropTypes.object,
-  // weatherdata: React.PropTypes.object,
-  // description: React.PropTypes.object,
+DiveSiteInfoContainer.propTypes = {
+  bouy: React.PropTypes.string,
+  data: React.PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  weatherdata: React.PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  description: React.PropTypes.object, // eslint-disable-line react/forbid-prop-types
 };
 
-OceanWeather.defaultProps = {
-  graphHeight: 0,
-  // bouy: {},
-  // weatherdata: {},
-  // description: {},
+DiveSiteInfoContainer.defaultProps = {
+  bouy: '...loading...',
+  data: {},
+  weatherdata: {},
+  description: {},
 };
 
 export default DiveSiteInfoContainer;

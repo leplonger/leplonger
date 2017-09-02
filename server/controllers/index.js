@@ -46,12 +46,11 @@ module.exports = {
     post: (req, res) => {
       models.comments.post(req.body, (err) => {
         if (err) {
-          console.log('Error posting new comment to db', err);
           res.sendStatus(404);
         } else {
           const newComment = {
             name: req.body.name,
-            date_1: req.body.date_1,
+            date_1: req.body.date1,
             message: req.body.message,
             skill: req.body.skill,
           };
