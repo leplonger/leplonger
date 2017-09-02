@@ -15,21 +15,21 @@ const keys = require('../../config/index.js');
 /* -----------DEPLOYMENT---------------------*/
 
 
-const connection = mysql.createConnection({
-  host: 'mydbinstance.cwegnsivr2ab.us-west-2.rds.amazonaws.com',
-  user: 'masterUser',
-  password: keys.dbpass,
-  database: 'dive_team',
-});
+// const connection = mysql.createConnection({
+//   host: 'mydbinstance.cwegnsivr2ab.us-west-2.rds.amazonaws.com',
+//   user: 'masterUser',
+//   password: keys.dbpass,
+//   database: 'dive_team',
+// });
 
 
 /* -----------DEVELOPMENT---------------------*/
-// const connection = mysql.createConnection({
-//   host: 'localhost',
-//   user: 'root',
-//   password: '',
-//   database: 'dive_team'
-// });
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'dive_team',
+});
 /* -----------DEVELOPMENT---------------------*/
 
 Promise.promisifyAll(connection);

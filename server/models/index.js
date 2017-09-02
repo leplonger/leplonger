@@ -66,7 +66,6 @@ module.exports = {
 
   comments: {
     get: (req, res) => {
-      console.log('trying to get comments for: ', req.body);
       const diveID = req.body.diveSite_id;
       const queryString = 'SELECT * FROM comments INNER JOIN dives ON dives.id=comments.divesite_id LEFT JOIN users ut on comments.user_id = ut.id WHERE comments.divesite_id=' + diveID;
 
@@ -75,9 +74,9 @@ module.exports = {
       );
     },
 
-    post: (new_comment, callback) => {
-      const newComment = [new_comment.divesite_id, new_comment.message, new_comment.user_id, new_comment.date_1];
-      const queryString = 'INSERT INTO comments(divesite_id, message, user_id, date_1 ) VALUES(?,?,?,?)';
+    post: (comment, callback) => {
+      const newComment = [comment.divesiteId, comment.message, comment.userId, comment.date1];
+      const queryString = 'INSERT INTO comments(divesiteId, message, userId, date1 ) VALUES(?,?,?,?)';
       connection.query(queryString, newComment, (err, data) => {
         if (err) {
           console.log('could not post comment to database');
