@@ -1,6 +1,5 @@
 const bouys = require('./bouys.js');
 
-
 const getClosestBouy = (lat, lng) => {
   let closest;
   let shortestDistance = Infinity;
@@ -24,8 +23,7 @@ const getClosestBouy = (lat, lng) => {
 // they want to show the user, for now we're specifying waveheight(WVHT)
 // see comment in models/index.js ocean method for possible fields
 const formatBouyData = (data, field) => {
-  // let formatted = [];
-  let formatted = {
+  const formatted = {
     labels: [],
     datasets: [{
       data: [],
@@ -53,8 +51,7 @@ const formatBouyData = (data, field) => {
     // formatted.labels.push(hour < 12 ? `${hour}:00` : `${hour % 12 || 12}:00`);
     formatted.datasets[0].data.push(+rows[i][colIndex] || 0);
   }
-  console.log('\n');
-  console.log(formatted);
+
   return formatted;
 };
 
