@@ -2,7 +2,7 @@ const connection = require('../db');
 const Api = require('../../config/index.js');
 const axios = require('axios');
 const visUtils = require('../../visualization/visUtils.js');
-
+/*https://stackoverflow.com/questions/28485032/how-to-promisify-a-mysql-function-using-bluebird*/
 module.exports = {
   users: {
     get: (user, callback) => {
@@ -11,10 +11,9 @@ module.exports = {
 
       connection.query(queryString, (err, data) => {
         if (err) {
-          console.log('err');
+          console.log('Error: ', err);
           callback(err, null);
         } else {
-          console.log('Schema query: ', data);
           callback(null, data);
         }
       });
@@ -29,7 +28,6 @@ module.exports = {
           console.log('Error: ', err);
           callback(err, null);
         } else {
-          console.log('posted users to database');
           callback(null, data);
         }
       });
@@ -45,11 +43,11 @@ module.exports = {
           console.log('Error retrieving dive sites: ', err.message);
           res.send(404);
         }
-      })
+      });
     },
 
-    post: (new_sites, callback) => {
-      const diveSite = [new_sites.name, new_sites.longitude, new_sites.latitude, new_sites.rating, new_sites.description, new_sites.user_dive];
+    post: (newSites, callback) => {
+      const diveSite = [newSites.name, newSites.longitude, newSites.latitude, newSites.rating, newSites.description, newSites.user_dive];
       const queryString = 'INSERT INTO dives( name, longitude, latitude, rating, description, user_dive ) VALUES ( ?, ?, ?, ?, ?, ?)';
 
       connection.query(queryString, diveSite, (err, data) => {
@@ -57,7 +55,6 @@ module.exports = {
           console.log('could not post dive-sites to database');
           callback(err, null);
         } else {
-          console.log('posted dive-sites to database');
           callback(null, data);
         }
       });
@@ -67,11 +64,9 @@ module.exports = {
   comments: {
     get: (req, res) => {
       const diveID = req.body.diveSite_id;
-      const queryString = 'SELECT * FROM comments INNER JOIN dives ON dives.id=comments.divesite_id LEFT JOIN users ut on comments.user_id = ut.id WHERE comments.divesite_id=' + diveID;
+      const queryString = `SELECT * FROM comments INNER JOIN dives ON dives.id=comments.divesite_id LEFT JOIN users ut on comments.user_id = ut.id WHERE comments.divesite_id=${diveID}`;
 
-      return connection.queryAsync(
-        queryString
-      );
+      return connection.queryAsync(queryString);
     },
 
     post: (comment, callback) => {
@@ -93,7 +88,7 @@ module.exports = {
     // uncomment url for actual use, disabled so we don't hit api limit
     get: (req, res) => {
       const location = `${req.body.location.lat},${req.body.location.lng}`;
-      const url = `http://api.wunderground.com/api/${Api.weatherUnderground}/geolookup/conditions/q/${location}.json`;
+      // const url = `http://api.wunderground.com/api/${Api.weatherUnderground}/geolookup/conditions/q/${location}.json`;
 
       axios.get(url)
         .then((result) => {
@@ -115,12 +110,12 @@ module.exports = {
         .then((result) => {
           homeWeather.push(result.data);
           axios.get(`https://api.darksky.net/forecast/${Api.darkSky}/${centralCalCoordinates}`)
-            .then((res) => {
-              homeWeather.push(res.data);
+            .then((result2) => {
+              homeWeather.push(result2.data);
               axios.get(`https://api.darksky.net/forecast/${Api.darkSky}/${southCalCoordinates}`)
-                .then((resLOLSERIOUSLYWHATISTHISCODEMAN) => {
-                  homeWeather.push(resLOLSERIOUSLYWHATISTHISCODEMAN.data);
-                  resLOLSERIOUSLYWHATISTHISCODEMAN.json(homeWeather);
+                .then((result3) => {
+                  homeWeather.push(result3.data);
+                  res.json(homeWeather);
                 });
             });
         })
