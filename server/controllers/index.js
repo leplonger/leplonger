@@ -8,7 +8,6 @@ module.exports = {
         if (err) {
           res.send(404);
         } else {
-          console.log('yay');
           res.send(data);
         }
       });
@@ -53,7 +52,7 @@ module.exports = {
         });
     },
     post: (req, res) => {
-      models.comments.post(req.body, (err) => {
+      models.comments.post(req.body, (err, data) => {
         if (err) {
           res.sendStatus(404);
         } else {
@@ -130,6 +129,14 @@ module.exports = {
   },
 
   ocean: {
-    get: models.ocean.get,
+    get: (req, res) => {
+      models.ocean.get(req, (err, data) => {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send(data);
+        }
+      });
+    },
   },
 };

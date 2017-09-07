@@ -1,6 +1,7 @@
+const axios = require('axios');
+
 const connection = require('../db');
 const Api = require('../../config/index.js');
-const axios = require('axios');
 const visUtils = require('../../visualization/visUtils.js');
 
 module.exports = {
@@ -21,7 +22,7 @@ module.exports = {
 
       connection.query(queryString, diveSite, (err, data) => {
         if (err) {
-          console.log('could not post dive-sites to database');
+          console.log('Error adding new divesite: ', err.message);
           callback(err, null);
         } else {
           callback(null, data);
@@ -29,6 +30,7 @@ module.exports = {
       });
     },
   },
+
   users: {
     get: (user, callback) => {
       const userInfo = [user.user, user.pass];
@@ -43,7 +45,6 @@ module.exports = {
         }
       });
     },
-
     post: (newUser, callback) => {
       const user = [newUser.name, newUser.password, newUser.email, newUser.salt, newUser.age, newUser.skill];
       const queryString = 'INSERT INTO users( name, password, email, salt, age, skill ) VALUES (?, ?, ?, ?, ?, ?);';
@@ -60,15 +61,11 @@ module.exports = {
   },
 
   comments: {
-    get: (req, res) => {
+    get: (req) => {
       const diveID = req.body.diveSite_id;
       const queryString = `SELECT * FROM comments INNER JOIN dives ON dives.id=comments.divesite_id LEFT JOIN users ut on comments.user_id = ut.id WHERE comments.divesite_id=${diveID}`;
-      //what....
-      console.log('queryAsync');
-      console.log(connection.queryAsync);
       return connection.queryAsync(queryString);
     },
-
     post: (comment, callback) => {
       const newComment = [comment.divesiteId, comment.message, comment.userId, comment.date1];
       const queryString = 'INSERT INTO comments(divesiteId, message, userId, date1 ) VALUES(?,?,?,?)';
@@ -86,17 +83,15 @@ module.exports = {
     get: (location, callback) => {
       // uncomment url for actual use, disabled so we don't hit api limit
       // const url = `http://api.wunderground.com/api/${Api.weatherUnderground}/geolookup/conditions/q/${location}.json`;
-
       axios.get(url)
         .then(({ data }) => {
           callback(null, data);
         })
         .catch((err) => {
           console.log('error from weather api: ', err.message);
-          callback(err, data);
+          callback(err, null);
         });
     },
-
     home: (callback) => {
       let homeWeather = [];
       const norCalCoordinates = '37.7910,-122.5401';
@@ -124,7 +119,7 @@ module.exports = {
   },
 
   ocean: {
-    get: (req, res) => {
+    get: (req, callback) => {
       /*  field options for formatData:  [ '#YY','MM','DD','hh','mm','WDIR','WSPD','GST','WVHT',
       'DPD','APD','MWD','PRES','ATMP','WTMP','DEWP','VIS','PTDY','TIDE' ] */
       const latitude = +req.body.location.lat;
@@ -136,10 +131,11 @@ module.exports = {
           // const toFormat = result.data.split('\n').slice(0, 14);
           // COMMENTED OUT because what the hell is it even doing
           const waveHeights = visUtils.formatData(result.data, 'WVHT');
-          res.send({ heights: waveHeights, id: bouyId });
+          callback(null, { heights: waveHeights, id: bouyId });
         })
         .catch((err) => {
           console.log('Error getting bouy data: ', err);
+          callback(err, null);
         });
     },
   },
