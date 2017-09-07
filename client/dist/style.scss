@@ -1,5 +1,16 @@
 /*
 ================================================================================================
+VARIABLES
+run: sass style.scss style.css
+in terminal to create css file
+================================================================================================
+*/
+$whateverBlue: #a4b9f3;
+
+
+
+/*
+================================================================================================
 GLOBAL STYLES
 ================================================================================================
 */
@@ -34,19 +45,6 @@ body {
   color: black;
 }
 
-#myiframe {
-  -moz-transform: scale(0.4, 0.4);
-  -webkit-transform: scale(0.4, 0.4);
-  -o-transform: scale(0.4, 0.4);
-  -ms-transform: scale(0.4, 0.4);
-  transform: scale(0.4, 0.4);
-  -moz-transform-origin: top left;
-  -webkit-transform-origin: top left;
-  -o-transform-origin: top left;
-  -ms-transform-origin: top left;
-  transform-origin: top left;
-  margin-bottom: 0;
-}
 .cool-button {
   display: inline-block;
   width: 200px;
@@ -59,15 +57,14 @@ body {
   background-color: rgba(255, 255, 255, 0.25);
   transition: background-color 0.2s ease-out,
   border-color 0.2s ease-out;
-}
-.cool-button:hover,
-.cool-button:active {
-  background-color: #fff; /* fallback */
-  background-color: rgba(255, 255, 255, 0.4);
-  border-color: #fff; /* fallback */
-  border-color: rgba(255, 255, 255, 0.4);
-  transition: background-color 0.3s ease-in,
-  border-color 0.3s ease-in;
+  &:hover, &:active {
+    background-color: #fff; /* fallback */
+    background-color: rgba(255, 255, 255, 0.4);
+    border-color: #fff; /* fallback */
+    border-color: rgba(255, 255, 255, 0.4);
+    transition: background-color 0.3s ease-in,
+    border-color 0.3s ease-in;
+  }
 }
 
 /*
@@ -90,19 +87,14 @@ WEATHER BOXES
   padding-top: 0;
   width: 107%;
   padding-right: 15px;
+  h3 {
+    margin: 2px 0 5px 0;
+    padding: 0;
+  }
+  p {
+    color: #dfdbdb;
+  }
 }
-
-.weather-section h3 {
-  margin: 2px 0 5px 0;
-  padding: 0;
-}
-
-
-
-.weather-section p {
-  color: #dfdbdb;
-}
-
 .pannel img {
   width: 60px;
 }
@@ -120,7 +112,7 @@ WEATHER BOXES
   background-color: none;
 }
 .data {
-  color: #a4b9f3;
+  color: $whateverBlue;
   font-weight: bold;
 }
 
@@ -134,11 +126,10 @@ WEATHER BOXES
 }
 .table> tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
     padding: 0px;
-    line-height:
 }
 
 .info {
-  color: #a4b9f3;
+  color: $whateverBlue;
 }
 /*
 ================================================================================================
@@ -211,20 +202,8 @@ SIGNUP FORMS
 }
 .junk {
   background-color: red;
-}
+}/*y tho*/
 
-
-
-/*
-================================================================================================
-WAVE HEIGHT GRAPH
-================================================================================================
-*/
-
-svg {
-  width: 100%;
-  height: 100%;
-}
 
 /*
 ================================================================================================
@@ -246,7 +225,7 @@ COMMENTS
 
 .skill {
   font-weight: bold;
-  color: #a4b9f3;
+  color: $whateverBlue;
 }
 
 .dive-title {
@@ -280,13 +259,12 @@ COMMENTS
   background-color: rgba(63, 68, 119, 0.75);
   padding: 7px;
   margin: 5px 0;
-}
-
-.comment-right p {
-  color: #dfdbdb;
-}
-.comment-right h4 {
-  color: #a4b9f3;
+  &-right p {
+    color: #dfdbdb;
+  }
+  &-right h4 {
+    color: $whateverBlue;
+  }
 }
 
 .no-comment {
@@ -332,12 +310,11 @@ Dive Site DIVE SITE INFO
 
 .wave-chart {
   background-color: rgba(63, 68, 119, 0.75);
-}
-
-.wave-chart p {
-  font-size: 10px;
-  margin: 0;
-  padding: 0;
+  p {
+    font-size: 10px;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .label {
@@ -345,7 +322,7 @@ Dive Site DIVE SITE INFO
 }
 
 .about {
-  color: #a4b9f3;
+  color: $whateverBlue;
 }
 
 .chart-title {
@@ -356,7 +333,7 @@ Dive Site DIVE SITE INFO
 .leplonger {
   width: 107%;
   background-color: rgba(63, 68, 119, 0.75);
-  color: #a4b9f3;
+  color: $whateverBlue;
   margin: 0 0 5px 0;
   text-align: center;
   margin-left: -6px;

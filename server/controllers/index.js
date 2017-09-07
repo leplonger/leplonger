@@ -3,7 +3,15 @@ const sha1 = require('sha1');
 
 module.exports = {
   dives: {
-    get: models.dive_sites.get,
+    get: (req, res) => {
+      models.dive_sites.get((err, data) => {
+        if (err) {
+          res.send(404);
+        } else {
+          res.send(data);
+        }
+      });
+    },
     post: (req, res) => {
       models.dive_sites.post(req.body)
         .then((result) => {
@@ -44,7 +52,7 @@ module.exports = {
         });
     },
     post: (req, res) => {
-      models.comments.post(req.body, (err) => {
+      models.comments.post(req.body, (err, data) => {
         if (err) {
           res.sendStatus(404);
         } else {
@@ -100,11 +108,35 @@ module.exports = {
   },
 
   weather: {
-    get: models.weather.get,
-    home: models.weather.home,
+    get: ({ body }, res) => {
+      models.weather.get(`${body.location.lat},${body.location.lng}`, (err, data) => {
+        if (err) {
+          res.send(err);
+        } else {
+          res.json(data);
+        }
+      })
+    },
+    home: (req, res) => {
+      models.weather.home((err, data) => {
+        if (err) {
+          res.send(err);
+        } else {
+          res.json(data);
+        }
+      });
+    }
   },
 
   ocean: {
-    get: models.ocean.get,
+    get: (req, res) => {
+      models.ocean.get(req, (err, data) => {
+        if (err) {
+          res.send(err);
+        } else {
+          res.send(data);
+        }
+      });
+    },
   },
 };

@@ -3,8 +3,7 @@ const controller = require('./controllers');
 const router = require('express').Router();
 
 router.route('/dives')
-  .get(controller.dives.get)
-  .post(controller.dives.post);
+  .get(controller.dives.get);
 
 router.route('/users')
   .post(controller.users.post);
@@ -19,7 +18,6 @@ router.route('/newcomment')
   .post(controller.comments.post);
 
 router.route('/weather')
-  .get(controller.weather.get)
   .post(controller.weather.get);
 
 router.route('/weather/home')

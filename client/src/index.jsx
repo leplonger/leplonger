@@ -273,14 +273,14 @@ class App extends React.Component {
           />
 
           <div className="col-md-3 reviews-section">
-            {this.state.diveview ?
+            {this.state.diveview &&
               <CommentContainer
                 user={this.state.user}
                 currentsite={this.state.currentsite}
                 comments={this.state.commentdata}
                 addNewComment={this.addNewDiveSiteComment}
               />
-              : null}
+            }
           </div>
 
         </div>
