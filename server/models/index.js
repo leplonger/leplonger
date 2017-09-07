@@ -2,8 +2,33 @@ const connection = require('../db');
 const Api = require('../../config/index.js');
 const axios = require('axios');
 const visUtils = require('../../visualization/visUtils.js');
-/*https://stackoverflow.com/questions/28485032/how-to-promisify-a-mysql-function-using-bluebird*/
+
 module.exports = {
+  dive_sites: {
+    get: (callback) => {
+      connection.query('SELECT * FROM dives', (err, data) => {
+        if (err) {
+          console.log('Error retrieving dive sites: ', err.message);
+          callback(err, null);
+        } else {
+          callback(null, data);
+        }
+      });
+    },
+    post: (newSites, callback) => {
+      const diveSite = [newSites.name, newSites.longitude, newSites.latitude, newSites.rating, newSites.description, newSites.user_dive];
+      const queryString = 'INSERT INTO dives( name, longitude, latitude, rating, description, user_dive ) VALUES ( ?, ?, ?, ?, ?, ?)';
+
+      connection.query(queryString, diveSite, (err, data) => {
+        if (err) {
+          console.log('could not post dive-sites to database');
+          callback(err, null);
+        } else {
+          callback(null, data);
+        }
+      });
+    },
+  },
   users: {
     get: (user, callback) => {
       const userInfo = [user.user, user.pass];
@@ -25,34 +50,7 @@ module.exports = {
 
       connection.query(queryString, user, (err, data) => {
         if (err) {
-          console.log('Error: ', err);
-          callback(err, null);
-        } else {
-          callback(null, data);
-        }
-      });
-    },
-  },
-
-  dive_sites: {
-    get: (req, res) => {
-      connection.query('SELECT * FROM dives', (err, data) => {
-        if (!err) {
-          res.send(data);
-        } else {
-          console.log('Error retrieving dive sites: ', err.message);
-          res.send(404);
-        }
-      });
-    },
-
-    post: (newSites, callback) => {
-      const diveSite = [newSites.name, newSites.longitude, newSites.latitude, newSites.rating, newSites.description, newSites.user_dive];
-      const queryString = 'INSERT INTO dives( name, longitude, latitude, rating, description, user_dive ) VALUES ( ?, ?, ?, ?, ?, ?)';
-
-      connection.query(queryString, diveSite, (err, data) => {
-        if (err) {
-          console.log('could not post dive-sites to database');
+          console.log('Error adding new user: ', err);
           callback(err, null);
         } else {
           callback(null, data);
@@ -65,7 +63,9 @@ module.exports = {
     get: (req, res) => {
       const diveID = req.body.diveSite_id;
       const queryString = `SELECT * FROM comments INNER JOIN dives ON dives.id=comments.divesite_id LEFT JOIN users ut on comments.user_id = ut.id WHERE comments.divesite_id=${diveID}`;
-
+      //what....
+      console.log('queryAsync');
+      console.log(connection.queryAsync);
       return connection.queryAsync(queryString);
     },
 
@@ -74,10 +74,8 @@ module.exports = {
       const queryString = 'INSERT INTO comments(divesiteId, message, userId, date1 ) VALUES(?,?,?,?)';
       connection.query(queryString, newComment, (err, data) => {
         if (err) {
-          console.log('could not post comment to database');
           callback(err, null);
         } else {
-          console.log('posted new comment data to database');
           callback(null, data);
         }
       });
@@ -85,42 +83,42 @@ module.exports = {
   },
 
   weather: {
-    // uncomment url for actual use, disabled so we don't hit api limit
-    get: (req, res) => {
-      const location = `${req.body.location.lat},${req.body.location.lng}`;
+    get: (location, callback) => {
+      // uncomment url for actual use, disabled so we don't hit api limit
       // const url = `http://api.wunderground.com/api/${Api.weatherUnderground}/geolookup/conditions/q/${location}.json`;
 
       axios.get(url)
-        .then((result) => {
-          console.log('received data from weatherUnderground');
-          res.json(result.data);
+        .then(({ data }) => {
+          callback(null, data);
         })
         .catch((err) => {
           console.log('error from weather api: ', err.message);
+          callback(err, data);
         });
     },
 
-    home: (req, res) => {
+    home: (callback) => {
       let homeWeather = [];
       const norCalCoordinates = '37.7910,-122.5401';
       const centralCalCoordinates = '35.3257,-120.9237';
       const southCalCoordinates = '37.8267,-122.4233';
 
       axios.get(`https://api.darksky.net/forecast/${Api.darkSky}/${norCalCoordinates}`)
-        .then((result) => {
-          homeWeather.push(result.data);
+        .then(({ data }) => {
+          homeWeather.push(data);
           axios.get(`https://api.darksky.net/forecast/${Api.darkSky}/${centralCalCoordinates}`)
-            .then((result2) => {
-              homeWeather.push(result2.data);
+            .then(({ data2 }) => {
+              homeWeather.push(data2);
               axios.get(`https://api.darksky.net/forecast/${Api.darkSky}/${southCalCoordinates}`)
-                .then((result3) => {
-                  homeWeather.push(result3.data);
-                  res.json(homeWeather);
+                .then(({ data3 }) => {
+                  homeWeather.push(data3);
+                  callback(null, homeWeather);
                 });
             });
         })
         .catch((err) => {
           console.log('Error retrieving home page weather: ', err.message);
+          callback(err, null);
         });
     },
   },

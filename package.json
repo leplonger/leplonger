@@ -13,7 +13,6 @@
     "seed-data": "node server/db/worker.js",
     "rmb": "rm /leplonger/client/dist/bundle.js",
     "test": "mocha test"
-    // sass style.scss style.css
   },
   "devDependencies": {
     "babel-core": "^6.23.1",
