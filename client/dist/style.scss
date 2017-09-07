@@ -55,15 +55,14 @@ body {
   background-color: rgba(255, 255, 255, 0.25);
   transition: background-color 0.2s ease-out,
   border-color 0.2s ease-out;
-}
-.cool-button:hover,
-.cool-button:active {
-  background-color: #fff; /* fallback */
-  background-color: rgba(255, 255, 255, 0.4);
-  border-color: #fff; /* fallback */
-  border-color: rgba(255, 255, 255, 0.4);
-  transition: background-color 0.3s ease-in,
-  border-color 0.3s ease-in;
+  &:hover, &:active {
+    background-color: #fff; /* fallback */
+    background-color: rgba(255, 255, 255, 0.4);
+    border-color: #fff; /* fallback */
+    border-color: rgba(255, 255, 255, 0.4);
+    transition: background-color 0.3s ease-in,
+    border-color 0.3s ease-in;
+  }
 }
 
 /*
@@ -86,13 +85,13 @@ WEATHER BOXES
   padding-top: 0;
   width: 107%;
   padding-right: 15px;
-}
-.weather-section h3 {
-  margin: 2px 0 5px 0;
-  padding: 0;
-}
-.weather-section p {
-  color: #dfdbdb;
+  h3 {
+    margin: 2px 0 5px 0;
+    padding: 0;
+  }
+  p {
+    color: #dfdbdb;
+  }
 }
 .pannel img {
   width: 60px;
@@ -201,20 +200,8 @@ SIGNUP FORMS
 }
 .junk {
   background-color: red;
-}
+}/*y tho*/
 
-
-
-/*
-================================================================================================
-WAVE HEIGHT GRAPH
-================================================================================================
-*/
-
-svg {
-  width: 100%;
-  height: 100%;
-}
 
 /*
 ================================================================================================
@@ -270,13 +257,12 @@ COMMENTS
   background-color: rgba(63, 68, 119, 0.75);
   padding: 7px;
   margin: 5px 0;
-}
-
-.comment-right p {
-  color: #dfdbdb;
-}
-.comment-right h4 {
-  color: $whateverBlue;
+  &-right p {
+    color: #dfdbdb;
+  }
+  &-right h4 {
+    color: $whateverBlue;
+  }
 }
 
 .no-comment {
@@ -322,12 +308,11 @@ Dive Site DIVE SITE INFO
 
 .wave-chart {
   background-color: rgba(63, 68, 119, 0.75);
-}
-
-.wave-chart p {
-  font-size: 10px;
-  margin: 0;
-  padding: 0;
+  p {
+    font-size: 10px;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 .label {
